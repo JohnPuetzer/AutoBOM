@@ -1,0 +1,17 @@
+Autocad Lisp GOALS 9/14/2023 JTP
+-PIPING
+  -Creating 3D pipe using 3D solids. Attach material type & addition data to 3D solid pipes 
+  -Inserting FS,SS fittings, valves at 90's, along straight pipe, etc.
+  -"Debug mode" color 3D pipe and fitting to visually differentiate between FS,SS,GALV,BI,UNCOATED, etc.
+  -Pipe length counter, auto BOM
+  -Change material type without redoing piping / fittings
+
+-BOM
+  -Extract part/piping qty. from modelspace. 
+  -auto insert item tags at correct locations on viewport
+  -create BOM table from item tags & pipe lengths
+  -label each item tag sequentially, to include duplicate checking
+  -create BOM table from tags. Export BOM table to Epicor ready format.
+  -update tags & BOM easily
+  -check for complete BOM, no missing materials on takeoffs
+
