@@ -63,6 +63,7 @@
 
 (defun insertPart (partType OD p1 /)
 
+  (setq partType (strcase partType))
   (if (= (LENGTH P1) 2)
     (progn
       (setq p2 (cadr p1)
@@ -321,11 +322,12 @@
   (runAutoPipe nil)
 ) ;_ end of defun
 
-(defun c:AutotPart ()
+(defun c:AutoPart ()
 
   (setq G:pipeOD (getPipeOD))
+  (setq location (getpoint "insert location"))
   (initget "90 45 Tee Coupling Cap Reducer")
-  (setq select (getkword "insert [90/45/Tee/Coupling/Cap/Reducer]"))
+  (setq select (getkword "insert [90/45/Tee/COupling/CAp/Reducer]"))
 
   (if (= select "Reducer")
     (progn
@@ -340,7 +342,7 @@
 	((= select2 "Tee") (setq select "REDUCER\\REDUCING TEE\\"))
       ) ;_ end of cond
     ) ;_ end of progn
-    (insertPart select (reverseLookupOD->NPS G:pipeOD) '(0 0 0))
+    (insertPart select G:pipeOD location)
 
   ) ;_ end of if
 ) ;_ end of defun
