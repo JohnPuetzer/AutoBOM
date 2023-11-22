@@ -11,6 +11,7 @@
 (setq PipeODLookup
        '(
 	 ("0.250" "0.54")
+     (".375" ".375")
 	 ("0.500" "0.84")
 	 ("0.750" "1.05")
 	 ("1.000" "1.315")
@@ -63,6 +64,7 @@
 
 (defun insertPart (partType OD p1 /)
 
+  (setq partType (strcase partType))
   (if (= (LENGTH P1) 2)
     (progn
       (setq p2 (cadr p1)
@@ -134,7 +136,7 @@
 (defun insertPipe (pp1 pp2 first OD /)
   (setq	fudgefactor
 	 (if (>= (atof (reverseLookupOD->NPS OD)) 2.5)
-	   (* (atof (reverseLookupOD->NPS OD)) 1.5)
+	   (* (atof OD) 1.3333)
 	   (atof (reverseLookupOD->NPS OD))
 	 ) ;_ end of if
   ) ;_ end of setq
@@ -321,26 +323,25 @@
   (runAutoPipe nil)
 ) ;_ end of defun
 
-(defun c:AutotPart ()
+(defun c:AutoPart ()
 
   (setq G:pipeOD (getPipeOD))
+  (setq location (getpoint "insert location"))
   (initget "90 45 Tee Coupling Cap Reducer")
-  (setq select (getkword "insert [90/45/Tee/Coupling/Cap/Reducer]"))
+  (setq select (getkword "insert [90/45/Tee/COupling/CAp/Reducer]"))
 
   (if (= select "Reducer")
     (progn
       (initget "Coupling Insert Tee Eccentric Concentric")
-      (setq
-	select2	(getkword
-		  "insert [Coupling/Insert/Tee/Eccentric/Concentric]"
+      (setq select2	(getkword "insert [COUpling/Insert/Tee/Eccentric/CONcentric]"
 		) ;_ end of getkword
       ) ;_ end of setq
       (setq pipeNPS2 (reverseLookupOD->NPS (getPipeOD)))
       (cond
-	((= select2 "Tee") (setq select "REDUCER\\REDUCING TEE\\"))
+	    ((= select2 "Tee") (setq select "REDUCER\\REDUCING TEE\\"))
       ) ;_ end of cond
     ) ;_ end of progn
-    (insertPart select (reverseLookupOD->NPS G:pipeOD) '(0 0 0))
+    (insertPart select G:pipeOD location)
 
   ) ;_ end of if
 ) ;_ end of defun

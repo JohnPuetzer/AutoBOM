@@ -52,6 +52,7 @@
 	 (vlax-release-object htmlfile)
 	 result
 ) ;_ defun
+
 (defun GetClipFromExcel ()
 	 (setq L1 (_GetClipBoardText))
 	 (setq L2 (LM:StringSubst "" "\n" L1))
@@ -414,10 +415,10 @@
 
 
 (defun isDictPartListCurrentDate (SavedDate excelFile /)
-	 (if	(= SavedDate (VL-FILE-SYSTIME excelFile))
-    T
-		  nil
-	 ) ;_ end of if
+    (if	(= SavedDate (VL-FILE-SYSTIME excelFile))
+        T
+        nil
+    ) ;_ end of if
 ) ;_ end of defun
 
 (defun getDict (dictName /) (vlax-ldata-get "dict" dictName)) ;_ end of defun
@@ -432,10 +433,9 @@
 	 (setq dictPartSaveDate (getDict "PartDataAllMasterLastSave")
 		  partDataAll	    (getDict "PartDataAllMaster")
 	 ) ;_ end of setq
-	 (if	(or 
-          (not partDataAll) ;_ end of not
-		      (not (isDictPartListCurrentDate dictPartSaveDate partNamesLookupExcelFile) ;_ end of isDictPartListCurrentDate
-		      ) ;_ end of not
+	 (if(or 
+            (not partDataAll) ;_ end of not
+		    (not (isDictPartListCurrentDate dictPartSaveDate partNamesLookupExcelFile))
 		) ;_ end of or
 		  (progn (princ "getting part data, please wait ......\n")
 			    (setq	partDataAll (getCellsFunction partNamesLookupExcelFile "Sheet1" "A1:D500") ;_ end of GetExcel
